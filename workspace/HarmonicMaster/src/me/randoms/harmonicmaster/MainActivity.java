@@ -8,6 +8,8 @@ import android.graphics.Paint;
 import android.graphics.Rect;
 import android.media.audiofx.Visualizer;
 import android.os.Bundle;
+import android.os.Handler;
+import android.os.Message;
 import android.util.Log;
 import android.view.View;
 import android.view.ViewGroup;
@@ -16,8 +18,21 @@ import android.widget.LinearLayout;
 public class MainActivity extends Activity {
 	private AudioStream mAudio;
 	private ProcessAudioHandler mAudioHandler;
-	private VisualizerView mView;
+	private static VisualizerView mView;
 	private LinearLayout mLinearLayout;
+	private static Handler mHandler = new Handler(){
+		@Override
+		public void handleMessage(Message msg) {
+			// TODO Auto-generated method stub
+			super.handleMessage(msg);
+			if(msg.what == 0){
+				//new data received
+				short[] buffer = (short[])msg.obj;
+				mView.updateVisualizer(buffer);
+			}
+			
+		}
+	};;
 	@Override
 	protected void onCreate(Bundle savedInstanceState) {
 		// TODO Auto-generated method stub
@@ -25,20 +40,22 @@ public class MainActivity extends Activity {
 		mView  = new VisualizerView(this);
 		mView.setLayoutParams(new ViewGroup.LayoutParams(
 				ViewGroup.LayoutParams.MATCH_PARENT,
-				(int) (160 * getResources()
-						.getDisplayMetrics().density)));
+				ViewGroup.LayoutParams.MATCH_PARENT));
 		mLinearLayout = new LinearLayout(this);
 		mLinearLayout.setOrientation(LinearLayout.VERTICAL);
 		mLinearLayout.addView(mView);
 
+		
 		setContentView(mLinearLayout);
 		mAudioHandler = new ProcessAudioHandler(){
 
 			@Override
 			public void onProcess(short[] buffer) {
 				// TODO Auto-generated method stub
-				Log.d("Data Received",String.valueOf(buffer[0]));
-				mView.updateVisualizer(buffer);
+				Message msg = Message.obtain();
+				msg.obj = buffer;
+				msg.what = 0;
+				mHandler.sendMessage(msg);
 			}
 
 			@Override
@@ -56,8 +73,9 @@ public class MainActivity extends Activity {
 		};
 		
 		mAudio = new AudioStream(mAudioHandler);
-		mAudio.run();
 	}
+	
+	
 	
 	/**
 	 * A simple class that draws waveform data received from a
@@ -69,6 +87,7 @@ public class MainActivity extends Activity {
 		private double[] mFFTBytes;
 		private double[] FFTImage; // fft image part
 		private float[] mPoints;
+		private float[] fftPoints;
 		private Rect mRect = new Rect();
 
 		private Paint mForePaint = new Paint();
@@ -85,11 +104,11 @@ public class MainActivity extends Activity {
 		{
 			mBytes = null;
 
-			mForePaint.setStrokeWidth(8f);
+			mForePaint.setStrokeWidth(2f);
 			mForePaint.setAntiAlias(true);
 			mForePaint.setColor(Color.rgb(0, 128, 255));
 			
-			mFFTPaint.setStrokeWidth(8f);
+			mFFTPaint.setStrokeWidth(2f);
 			mFFTPaint.setAntiAlias(true);
 			mFFTPaint.setColor(Color.rgb(255, 102, 255));
 			
@@ -120,9 +139,11 @@ public class MainActivity extends Activity {
 				i += 2;
 				j++;
 			}*/
+			
 			mBytes = fft;
 			invalidate();
 		}
+
 
 		@Override
 		protected void onDraw(Canvas canvas)
@@ -138,19 +159,22 @@ public class MainActivity extends Activity {
 			{
 				mPoints = new float[mBytes.length * 4];
 			}
+			if(fftPoints ==null || fftPoints.length <mFFTBytes.length*4){
+				fftPoints = new float[mFFTBytes.length*4];
+			}
 
 			mRect.set(0, 0, getWidth(), getHeight());
 
 			//绘制波形
-			/* for (int i = 0; i < mBytes.length - 1; i++) {
+			for (int i = 0; i < mBytes.length - 1; i++) {
 			 mPoints[i * 4] = mRect.width() * i / (mBytes.length - 1);
 			 mPoints[i * 4 + 1] = mRect.height() / 2
-			 + ((byte) (mBytes[i] + 128)) * (mRect.height() / 2) / 128;
+			 + (short) ((mRect.height() / 2)*mBytes[i]/32767);
 			 mPoints[i * 4 + 2] = mRect.width() * (i + 1) / (mBytes.length - 1);
 			 mPoints[i * 4 + 3] = mRect.height() / 2
-			 + ((byte) (mBytes[i + 1] + 128)) * (mRect.height() / 2) / 128;
+			 + (short) ((mRect.height() / 2)*mBytes[i+1]/32767);
 			 }
-			canvas.drawLines(mPoints, mForePaint);*/
+			canvas.drawLines(mPoints, mForePaint);
 			//绘制频谱
 			final int baseX = mRect.width()/mSpectrumNum;
 			final int height = mRect.height();
@@ -164,15 +188,15 @@ public class MainActivity extends Activity {
 				
 				final int xi = baseX*i + baseX/2;
 				
-				mPoints[i * 4] = xi;
-				mPoints[i * 4 + 1] = height;
+				fftPoints[i * 4] = xi;
+				fftPoints[i * 4 + 1] = height;
 				
-				mPoints[i * 4 + 2] = xi;
-				mPoints[i * 4 + 3] = height - (float)mFFTBytes[i]/200;
+				fftPoints[i * 4 + 2] = xi;
+				fftPoints[i * 4 + 3] = height - (float)mFFTBytes[i]/1024;
 				//mPoints[i * 4 + 3] = height - 1;
 			}
 			
-			canvas.drawLines(mPoints,mFFTPaint);
+			canvas.drawLines(fftPoints,mFFTPaint);
 		}
 	}
 
