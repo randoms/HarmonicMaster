@@ -7,9 +7,4 @@
     tools:ignore="MergeRootFrame"
     android:orientation="horizontal">
     
-    <com.skd.androidrecording.visualizer.VisualizerView
-	    android:id="@+id/visualizerView"
-	    android:layout_width="fill_parent"
-	    android:layout_height="100dp" >
-	</com.skd.androidrecording.visualizer.VisualizerView>
 </LinearLayout>

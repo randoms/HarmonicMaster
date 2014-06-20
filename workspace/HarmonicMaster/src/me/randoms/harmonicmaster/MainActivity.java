@@ -10,7 +10,6 @@ import android.media.audiofx.Visualizer;
 import android.os.Bundle;
 import android.os.Handler;
 import android.os.Message;
-import android.util.Log;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.LinearLayout;
@@ -92,8 +91,14 @@ public class MainActivity extends Activity {
 
 		private Paint mForePaint = new Paint();
 		private Paint mFFTPaint = new Paint();
+		private Paint mTextPaint = new Paint();
+		private Paint mEraser = new Paint();
 		private int mSpectrumNum = 512;
 		private Fft mFFT;
+		
+		
+		private String text;
+		
 		public VisualizerView(Context context)
 		{
 			super(context);
@@ -114,6 +119,12 @@ public class MainActivity extends Activity {
 			
 			mFFT = new Fft(1024);
 			mFFTBytes = new double[mSpectrumNum];
+			
+			mTextPaint.setStrokeWidth(3);
+			mTextPaint.setColor(Color.rgb(102, 200, 255));
+			mTextPaint.setTextSize(30);
+			
+			mEraser.setColor(Color.WHITE);
 		}
 
 		public void updateVisualizer(short[] fft)
@@ -130,17 +141,15 @@ public class MainActivity extends Activity {
 				mFFTBytes[i] = Math.hypot(fftdata[i],FFTImage[i]);
 			}
 			
-			/*byte[] model = new byte[fft.length / 2 + 1];
-
-			model[0] = (byte) Math.abs(fft[0]);
-			for (int i = 2, j = 1; j < mSpectrumNum;)
-			{
-				model[j] = (byte) Math.hypot(fft[i], fft[i + 1]);
-				i += 2;
-				j++;
-			}*/
-			
 			mBytes = fft;
+			
+			// find the top 6 frequency
+			int[] topSix = Utils.findPeaks(mFFTBytes);
+			String res = "";
+			for(int i=0;i<topSix.length;i++){
+				res = res + "freq:"+String.valueOf(topSix[i])+"  ";//+"value:"+String.valueOf(fft[topSix[i]])+ " ";
+			}
+			drawText(res);
 			invalidate();
 		}
 
@@ -197,6 +206,15 @@ public class MainActivity extends Activity {
 			}
 			
 			canvas.drawLines(fftPoints,mFFTPaint);
+			
+			if(text != null){
+				canvas.drawRect(0, 0, getWidth(), 60, mEraser);
+				canvas.drawText(text, 10, 50, mTextPaint);
+			}
+		}
+		
+		public void drawText(String mtext){
+			this.text = mtext;
 		}
 	}
 
