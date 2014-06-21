@@ -10,7 +10,7 @@ public final class Utils {
 			int max_index = -1;
 			for(int j=0;j<input.length;j++){
 				if(input[j]>max){
-					// 没有已经添加
+					// 娌℃湁宸茬粡娣诲姞
 					boolean addedFlag = false;
 					for(int k=0;k<6;k++){
 						if(j == addedList[k])addedFlag = true;
@@ -20,7 +20,7 @@ public final class Utils {
 						max = input[j];
 					}
 				}
-				// 添加到addedList
+				// 娣诲姞鍒癮ddedList
 				addedList[i] = max_index;
 			}
 		}
@@ -35,7 +35,7 @@ public final class Utils {
 			int max_index = -1;
 			for(int j=0;j<input.length;j++){
 				if(input[j]>max){
-					// 没有已经添加
+					// 娌℃湁宸茬粡娣诲姞
 					boolean addedFlag = false;
 					for(int k=0;k<6;k++){
 						if(j == addedList[k])addedFlag = true;
@@ -45,12 +45,13 @@ public final class Utils {
 						max = input[j];
 					}
 				}
-				// 添加到addedList
+				// 娣诲姞鍒癮ddedList
 				addedList[i] = max_index;
 			}
 		}
 		return addedList;
 	}
+	
 	
 	public static int[] findPeaks(double[] input){
 		// find the top 6 peaks
@@ -65,17 +66,17 @@ public final class Utils {
 					for(int j= addedList.length-1;j>=0;j--){
 						if(addedList[j] == -1 || input[i]>input[addedList[j]]){
 							bigFlag = true;
-							// 继续和更大的记录比较
+							// 缁х画鍜屾洿澶х殑璁板綍姣旇緝
 						}else{
 							if(bigFlag){
-								// 没有比这个大，但是比下一个大
+								// 娌℃湁姣旇繖涓ぇ锛屼絾鏄瘮涓嬩竴涓ぇ
 								insert(addedList,j+1,i);
 								bigFlag = false;
 							}
 						}
 					}
 					if(bigFlag){
-						addedList = insert(addedList,0,i); //比所有的都大
+						addedList = insert(addedList,0,i); //姣旀墍鏈夌殑閮藉ぇ
 					}
 				}
 			}
@@ -91,7 +92,7 @@ public final class Utils {
 		}
 		
 		for(int i=input.length-1;i>index;i--){
-			// 把index之后的数据往后移一位，丢掉最后一个
+			// 鎶奿ndex涔嬪悗鐨勬暟鎹線鍚庣Щ涓�綅锛屼涪鎺夋渶鍚庝竴涓�
 			input[i] = input[i -1];
 		}
 		input[index] = value;

@@ -1,0 +1,5 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+    <color name="select_btn">#CCCCCC</color>
+    <color name="select_btn_focus">#FFFFFF</color>
+</resources>

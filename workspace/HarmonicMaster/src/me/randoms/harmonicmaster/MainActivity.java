@@ -2,6 +2,7 @@ package me.randoms.harmonicmaster;
 
 import android.app.Activity;
 import android.content.Context;
+import android.content.Intent;
 import android.graphics.Canvas;
 import android.graphics.Color;
 import android.graphics.Paint;
@@ -10,6 +11,7 @@ import android.media.audiofx.Visualizer;
 import android.os.Bundle;
 import android.os.Handler;
 import android.os.Message;
+import android.util.Log;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.LinearLayout;
@@ -17,17 +19,19 @@ import android.widget.LinearLayout;
 public class MainActivity extends Activity {
 	private AudioStream mAudio;
 	private ProcessAudioHandler mAudioHandler;
-	private static VisualizerView mView;
+	public static VisualizerView mView;
 	private LinearLayout mLinearLayout;
+	private int insertSound = -1;
+	private boolean doRecognize = false;
+	
+	
 	private static Handler mHandler = new Handler(){
 		@Override
 		public void handleMessage(Message msg) {
 			// TODO Auto-generated method stub
 			super.handleMessage(msg);
 			if(msg.what == 0){
-				//new data received
-				short[] buffer = (short[])msg.obj;
-				mView.updateVisualizer(buffer);
+				mView.updateVisualizer();
 			}
 			
 		}
@@ -43,16 +47,31 @@ public class MainActivity extends Activity {
 		mLinearLayout = new LinearLayout(this);
 		mLinearLayout.setOrientation(LinearLayout.VERTICAL);
 		mLinearLayout.addView(mView);
-
+		Intent mIntent = getIntent();
+		insertSound = mIntent.getIntExtra("insertSound", -1);
+		doRecognize = mIntent.getBooleanExtra("doRecognize", false);
 		
 		setContentView(mLinearLayout);
 		mAudioHandler = new ProcessAudioHandler(){
 
+			
 			@Override
 			public void onProcess(short[] buffer) {
 				// TODO Auto-generated method stub
+				
+				
+				// set tasks
+				AudioProcesser.setInsertSound(insertSound);
+				if(doRecognize)AudioProcesser.beginRecognize();
+				
+				//begin process
+				AudioProcesser.process(buffer);
+				if(insertSound != -1 && !AudioProcesser.isStatic()){
+					// static over
+					Log.d("RandomsRes",Utils.arrayToString(AudioProcesser.soundDb[insertSound]));
+					finish();
+				}
 				Message msg = Message.obtain();
-				msg.obj = buffer;
 				msg.what = 0;
 				mHandler.sendMessage(msg);
 			}
@@ -84,7 +103,8 @@ public class MainActivity extends Activity {
 	{
 		private short[] mBytes;
 		private double[] mFFTBytes;
-		private double[] FFTImage; // fft image part
+		
+		
 		private float[] mPoints;
 		private float[] fftPoints;
 		private Rect mRect = new Rect();
@@ -94,7 +114,6 @@ public class MainActivity extends Activity {
 		private Paint mTextPaint = new Paint();
 		private Paint mEraser = new Paint();
 		private int mSpectrumNum = 512;
-		private Fft mFFT;
 		
 		
 		private String text;
@@ -117,7 +136,6 @@ public class MainActivity extends Activity {
 			mFFTPaint.setAntiAlias(true);
 			mFFTPaint.setColor(Color.rgb(255, 102, 255));
 			
-			mFFT = new Fft(1024);
 			mFFTBytes = new double[mSpectrumNum];
 			
 			mTextPaint.setStrokeWidth(3);
@@ -127,29 +145,11 @@ public class MainActivity extends Activity {
 			mEraser.setColor(Color.WHITE);
 		}
 
-		public void updateVisualizer(short[] fft)
+		public void updateVisualizer()
 		{
-			// byte to double
-			double[] fftdata = new double[fft.length];
-			FFTImage = new double[fft.length];
-			for(int i = 0;i<fft.length;i++){
-				fftdata[i] = (double)fft[i];
-				FFTImage[i] = 0;
-			}
-			mFFT.fft(fftdata, FFTImage);
-			for(int i=0;i<mSpectrumNum;i++){
-				mFFTBytes[i] = Math.hypot(fftdata[i],FFTImage[i]);
-			}
-			
-			mBytes = fft;
-			
-			// find the top 6 frequency
-			int[] topSix = Utils.findPeaks(mFFTBytes);
-			String res = "";
-			for(int i=0;i<topSix.length;i++){
-				res = res + "freq:"+String.valueOf(topSix[i])+"  ";//+"value:"+String.valueOf(fft[topSix[i]])+ " ";
-			}
-			drawText(res);
+			mBytes = AudioProcesser.getSoundData();
+			mFFTBytes = AudioProcesser.getFFT();
+			drawText(AudioProcesser.getRes());
 			invalidate();
 		}
 
