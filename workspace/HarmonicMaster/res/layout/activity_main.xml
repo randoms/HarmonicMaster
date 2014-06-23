@@ -3,8 +3,43 @@
     android:id="@+id/container"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    tools:context="me.randoms.harmonicmaster.MainActivity"
-    tools:ignore="MergeRootFrame"
-    android:orientation="horizontal">
+    android:padding="5dp"
+    android:orientation="vertical">
+    <TextView 
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:text="@string/spectrum_view"
+        android:textSize="16sp" />
     
+    <me.randoms.harmonicmaster.SpectrumView
+        xmlns:custom="http://schemas.android.com/apk/res/me.randoms.harmonicmaster"
+        android:id="@+id/spectrumView"
+        android:layout_width="match_parent"
+        android:layout_height="100dp"
+        custom:line_size="2"
+        custom:spectrum_num="512"/>
+    
+    <TextView
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:text="@string/time_field_view"
+        android:textSize="16sp"/>
+    
+    <me.randoms.harmonicmaster.TimeFieldView
+        xmlns:custom="http://schemas.android.com/apk/res/me.randoms.harmonicmaster"
+        android:id="@+id/timeView"
+        android:layout_width="match_parent"
+        android:layout_height="100dp"
+        custom:line_size="2" />
+    
+    <TextView
+        android:id="@+id/sound_status" 
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content" />
+    
+    <TextView 
+        android:id="@+id/recognize_res"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:textSize="16sp"/>
 </LinearLayout>

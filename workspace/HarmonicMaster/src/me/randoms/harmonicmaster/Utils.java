@@ -1,5 +1,7 @@
 package me.randoms.harmonicmaster;
 
+import android.util.Log;
+
 public final class Utils {
 	
 	public static int[] getTopSix(short[] input){
@@ -106,5 +108,23 @@ public final class Utils {
 		}
 		res = res +"]\n";
 		return res;
+	}
+	
+	/**
+	 * @param input
+	 * @return
+	 * to String with a fixed length
+	 */
+	public static String fixToString(String input,int length){
+		char[] res = new char[length];
+		for(int i=0;i<length;i++){
+			if(i < input.length()){
+				res[i] = input.charAt(i);
+			}else{
+				res[i] = ' ';
+			}
+		}
+		Log.d("Randoms",String.valueOf(String.valueOf(res).length()));
+		return String.valueOf(res);
 	}
 }

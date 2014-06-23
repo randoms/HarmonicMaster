@@ -31,6 +31,7 @@ public class StaticActivity extends Activity{
 				// TODO Auto-generated method stub
 				Intent mIntent = new Intent(mView.getContext(),MainActivity.class);
 				mIntent.putExtra("doRecognize", true);
+				startActivity(mIntent);
 			}
 			
 		});

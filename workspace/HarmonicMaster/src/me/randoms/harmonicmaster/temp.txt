@@ -298,3 +298,14 @@ public class MainActivity extends Activity
 	
 	
 }
+
+
+
+
+recognize 界面设计
+应该包含的信息
+当前的时域图
+当前的频域图
+当前的识别结果
+
+

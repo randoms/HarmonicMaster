@@ -8,4 +8,6 @@
 	<string name="mode_recognize">识别模式</string>
 	<string name="mode_record">记录模式</string>
 	<string name="start_recognize">开始识别</string>
+	<string name="time_field_view">时域图</string>
+	<string name="spectrum_view">频域图</string>
 </resources>

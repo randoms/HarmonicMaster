@@ -1,0 +1,8 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+    <declare-styleable name="SpectrumView">
+       <attr name="color" format="color" />
+       <attr name="line_size" format="float" />
+       <attr name="spectrum_num" format="integer" />
+   </declare-styleable>
+</resources>

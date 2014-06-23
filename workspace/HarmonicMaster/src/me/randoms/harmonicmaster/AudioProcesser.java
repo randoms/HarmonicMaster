@@ -85,7 +85,7 @@ public final class AudioProcesser {
 		// find the top 6 frequency
 		int[] topSix = Utils.findPeaks(mFFTBytes);
 		for(int i=0;i<topSix.length;i++){
-			res = res + "freq:"+String.valueOf(topSix[i])+"  ";//+"value:"+String.valueOf(fft[topSix[i]])+ " ";
+			res = res + "freq:"+Utils.fixToString(String.valueOf(topSix[i]), 6);//+"value:"+String.valueOf(fft[topSix[i]])+ " ";
 		}
 		
 		// check if there is a blow
@@ -112,9 +112,9 @@ public final class AudioProcesser {
 		}
 		
 		if(blowFlag){
-			res = res + "blooooooooooooowed";
+			res = res + Utils.fixToString("blow", 6);
 		}else{
-			res = res + "n";
+			res = res + Utils.fixToString("no", 6);
 		}
 		
 		// update lastSix
@@ -174,4 +174,5 @@ public final class AudioProcesser {
 	public static int getSoundName(){
 		return currentSoundId;
 	}
+	
 }
