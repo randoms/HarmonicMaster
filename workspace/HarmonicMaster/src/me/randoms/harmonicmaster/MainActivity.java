@@ -14,7 +14,6 @@ public class MainActivity extends Activity {
 	private static SpectrumView mSpectView;
 	private static TimeFieldView mTimeView;
 	private int insertSound = -1;
-	private boolean doRecognize = false;
 	private static TextView resText;
 	private static TextView statusText;
 	
@@ -39,7 +38,8 @@ public class MainActivity extends Activity {
 		setContentView(R.layout.activity_main);
 		Intent mIntent = getIntent();
 		insertSound = mIntent.getIntExtra("insertSound", -1);
-		doRecognize = mIntent.getBooleanExtra("doRecognize", false);
+		// set tasks
+		AudioProcesser.setInsertSound(insertSound);
 		mSpectView = (SpectrumView)findViewById(R.id.spectrumView);
 		mTimeView = (TimeFieldView)findViewById(R.id.timeView);
 		resText = (TextView)findViewById(R.id.recognize_res);
@@ -51,28 +51,25 @@ public class MainActivity extends Activity {
 			@Override
 			public void onProcess(short[] buffer) {
 				// TODO Auto-generated method stub
-				
-				
-				// set tasks
-				AudioProcesser.setInsertSound(insertSound);
-				if(doRecognize)AudioProcesser.beginRecognize();
-				
 				//begin process
-				AudioProcesser.process(buffer);
-				if(insertSound != -1 && !AudioProcesser.isStatic()){
-					// static over
-					Log.d("RandomsRes",Utils.arrayToString(AudioProcesser.soundDb[insertSound]));
-					finish();
+				if(!AudioProcesser.isProcessing()){ // 尚未处理完
+					AudioProcesser.process(buffer);
+					if(insertSound != -1 && !AudioProcesser.isStatic()){
+						// static over
+						Log.d("RandomsRes",Utils.arrayToString(AudioProcesser.soundDb[insertSound]));
+						mAudio.close();
+						finish();
+					}
+					Message msg = Message.obtain();
+					msg.what = 0;
+					mHandler.sendMessage(msg);
 				}
-				Message msg = Message.obtain();
-				msg.what = 0;
-				mHandler.sendMessage(msg);
 			}
 
 			@Override
 			public void onStop() {
 				// TODO Auto-generated method stub
-				
+				Log.d("Randoms","Stop");
 			}
 
 			@Override

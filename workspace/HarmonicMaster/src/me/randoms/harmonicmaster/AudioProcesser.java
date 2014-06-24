@@ -29,6 +29,9 @@ public final class AudioProcesser {
 	static int currentSoundId = -1; // -1 means need to recognize again
 	static boolean startRecognize = false; // only start recognize when this is true
 	
+	//process lock
+	static boolean processFlag = false;
+	
 	public static boolean getBlowFlag(){
 		return blowFlag;
 	}
@@ -62,6 +65,7 @@ public final class AudioProcesser {
 	}
 	
 	public static void process(short[] fft){
+		processFlag = true;
 		res = "";
 		soundData = fft;
 		// byte to double
@@ -120,6 +124,9 @@ public final class AudioProcesser {
 		// update lastSix
 		lastTopSix = topSix;
 		
+		if(staticId  != -1){
+			staticFlag = true;
+		}
 		// static task begin
 		if(staticId != -1 && blowFlag){
 			insertNewSound();
@@ -129,7 +136,7 @@ public final class AudioProcesser {
 		if(startRecognize && currentSoundId == -1 && blowFlag == true){
 			recognizeWork();
 		}
-		
+		processFlag = false;
 	}
 	
 	/**
@@ -141,7 +148,7 @@ public final class AudioProcesser {
 		staticFlag = true;
 		if(staticCount<1000){
 			for(int i=0;i<6;i++){
-				staticRecord[lastTopSix[i]] ++;
+				staticRecord[lastTopSix[i]] =(short) (staticRecord[lastTopSix[i]] +  6-i);
 				Log.d("AudioProcesser",String.valueOf(staticCount));
 				staticCount ++;
 			}
@@ -160,12 +167,15 @@ public final class AudioProcesser {
 			for(int j=0;j<88;j++){
 				int equalCount = 0;
 				for(int k=0;k<6;k++){
-					if(soundDb[j][k] == lastTopSix[k]){
-						equalCount ++;
+					for(int l=0;l<6;l++){
+						if(soundDb[j][k] -2 <=lastTopSix[l] && soundDb[j][k] +2 >=lastTopSix[l]){
+							equalCount ++;
+						}
 					}
 				}
 				if(equalCount > i){
 					currentSoundId = j;
+					Log.d("RandomsEqual",String.valueOf(equalCount));
 					return;
 				}
 			}
@@ -174,6 +184,10 @@ public final class AudioProcesser {
 	
 	public static int getSoundName(){
 		return currentSoundId;
+	}
+	
+	public static boolean isProcessing(){
+		return processFlag;
 	}
 	
 }
