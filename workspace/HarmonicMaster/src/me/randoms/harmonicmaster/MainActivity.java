@@ -27,10 +27,11 @@ public class MainActivity extends Activity {
 				mSpectView.setData(AudioProcesser.getFFT());
 				mTimeView.setData(AudioProcesser.getSoundData());
 				statusText.setText(AudioProcesser.getRes());
+				resText.setText(String.valueOf(AudioProcesser.getSoundName()));
 			}
 			
 		}
-	};;
+	};
 	@Override
 	protected void onCreate(Bundle savedInstanceState) {
 		// TODO Auto-generated method stub

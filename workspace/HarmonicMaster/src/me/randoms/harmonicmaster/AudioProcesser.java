@@ -129,6 +129,7 @@ public final class AudioProcesser {
 		if(startRecognize && currentSoundId == -1 && blowFlag == true){
 			recognizeWork();
 		}
+		
 	}
 	
 	/**
@@ -138,7 +139,7 @@ public final class AudioProcesser {
 	public static void insertNewSound(){
 		if(staticId == -1)return;
 		staticFlag = true;
-		if(staticCount<5000){
+		if(staticCount<1000){
 			for(int i=0;i<6;i++){
 				staticRecord[lastTopSix[i]] ++;
 				Log.d("AudioProcesser",String.valueOf(staticCount));

@@ -29,12 +29,33 @@ public class StaticActivity extends Activity{
 			@Override
 			public void onClick(View mView) {
 				// TODO Auto-generated method stub
-				Intent mIntent = new Intent(mView.getContext(),MainActivity.class);
-				mIntent.putExtra("doRecognize", true);
+				Intent mIntent = new Intent(mView.getContext(),PlayActivity.class);
 				startActivity(mIntent);
 			}
 			
 		});
+		
+		// load saved music data
+	}
+
+	
+	
+	@Override
+	protected void onStart() {
+		// TODO Auto-generated method stub
+		super.onStart();
+		
+		//load saved music data
+	}
+
+
+
+	@Override
+	protected void onStop() {
+		// TODO Auto-generated method stub
+		super.onStop();
+		
+		// save static data
 	}
 	
 	

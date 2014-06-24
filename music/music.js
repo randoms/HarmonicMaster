@@ -1,0 +1,42 @@
+var music = [
+    {
+        name:1,
+        start:0,
+        end:1,
+    },
+    {
+        name:2,
+        start:1,
+        end:2,
+    },
+    {
+        name:3,
+        start:2,
+        end:3,
+    },
+    {
+        name:4,
+        start:3,
+        end:4,
+    },
+    {
+        name:5,
+        start:4,
+        end:5,
+    },
+    {
+        name:6,
+        start:5,
+        end:6,
+    },
+    {
+        name:7,
+        start:6,
+        end:7,
+    },
+]
+
+var fs  = require('fs')
+fs.writeFile("music.json",JSON.stringify(music),function(){
+    console.log('complete');
+})

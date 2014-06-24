@@ -6,7 +6,6 @@ import android.graphics.Canvas;
 import android.graphics.Color;
 import android.graphics.Paint;
 import android.util.AttributeSet;
-import android.util.Log;
 import android.view.View;
 
 public class TimeFieldView extends View{
@@ -41,14 +40,12 @@ public class TimeFieldView extends View{
 
 	public void setData(short[] mdata){
 		mBytes = mdata;
-		Log.d("Randoms","timedrawdat");
 		invalidate();
 	}
 
 	@Override
 	protected void onDraw(Canvas canvas) {
 		// TODO Auto-generated method stub
-		Log.d("Randoms","timedraw");
 		super.onDraw(canvas);
 		if (mBytes == null){
 			return;

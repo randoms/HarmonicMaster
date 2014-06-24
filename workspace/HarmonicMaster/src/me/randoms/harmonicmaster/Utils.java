@@ -1,6 +1,5 @@
 package me.randoms.harmonicmaster;
 
-import android.util.Log;
 
 public final class Utils {
 	
@@ -124,7 +123,6 @@ public final class Utils {
 				res[i] = ' ';
 			}
 		}
-		Log.d("Randoms",String.valueOf(String.valueOf(res).length()));
 		return String.valueOf(res);
 	}
 }
