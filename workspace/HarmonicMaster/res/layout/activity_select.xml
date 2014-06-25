@@ -8,7 +8,7 @@
         android:id="@+id/btn_begin_recognize"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:text="@string/start_recognize" />
+        android:text="@string/start" />
     
 	<GridView
         android:id="@+id/soundBtns"

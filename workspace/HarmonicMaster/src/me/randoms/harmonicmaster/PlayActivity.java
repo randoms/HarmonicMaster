@@ -11,11 +11,15 @@ import android.os.Bundle;
 import android.os.Handler;
 import android.os.Message;
 import android.util.Log;
+import android.view.View;
 
 public class PlayActivity extends Activity{
 	private JSONObject musicJson;
-	private PlaySoundView mView;
+	private static PlaySoundView mView;
 	private static SoundResView mResView;
+	private static View separator;
+	private static PlayActivity that;
+	
 	private AudioStream mAudio;
 	private ProcessAudioHandler mAudioHandler;
 	
@@ -27,6 +31,11 @@ public class PlayActivity extends Activity{
 			super.handleMessage(msg);
 			if(msg.what == 0){
 				mResView.setSoundName(AudioProcesser.getSoundName()+1);
+				if(AudioProcesser.getSoundName() == mView.getCurrnetSound()){
+					separator.setBackgroundColor(that.getResources().getColor(R.color.separator_active));
+				}else{
+					separator.setBackgroundColor(that.getResources().getColor(R.color.separator));
+				}
 			}
 			
 		}
@@ -37,8 +46,10 @@ public class PlayActivity extends Activity{
 		
 		// TODO Auto-generated method stub
 		super.onCreate(savedInstanceState);
+		that = this;
 		musicJson = getMusic();
 		setContentView(R.layout.activity_play);
+		separator = findViewById(R.id.separator);
 		mView = (PlaySoundView)findViewById(R.id.playView);
 		mView.setSound(musicJson);
 		mView.setCallBack( new ProcessCallBack(){

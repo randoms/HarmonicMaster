@@ -20,6 +20,9 @@ public class PlaySoundView extends View{
 	private JSONArray music;
 	private long length;
 	
+	// current sound related
+	private int currentSound = -1;
+	
 	private static PlaySoundView that;
 	
 	// draw related
@@ -137,7 +140,7 @@ public class PlaySoundView extends View{
 		float left = 0;
 		float right = 0;
 		float bottom = 0;
-		
+		currentSound = -1;
 		for(int i =0;i<music.length();i++){
 			try {
 				sound = music.getJSONObject(i);
@@ -153,6 +156,10 @@ public class PlaySoundView extends View{
 			
 			if(bottom > 0 && top < getHeight()){
 				canvas.drawRect(left, top, right, bottom, mPaint);
+				if(bottom > getHeight() && top <getHeight()){
+					// current active sound
+					currentSound = i;
+				}
 			}
 			
 			if(mTimer.getTime() > length){
@@ -171,6 +178,10 @@ public class PlaySoundView extends View{
 	
 	public void setCallBack(ProcessCallBack cb){
 		mCallBack = cb;
+	}
+	
+	public int getCurrnetSound(){
+		return currentSound;
 	}
 
 }
