@@ -65,6 +65,11 @@
             android:name="me.randoms.harmonicmaster.PlayActivity">
             
         </activity>
+        <activity
+            android:name="me.randoms.harmonicmaster.SelectMusicActivity" >
+            
+        </activity>
+            
     </application>
 
 </manifest>

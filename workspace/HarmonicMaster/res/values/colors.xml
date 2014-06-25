@@ -2,4 +2,7 @@
 <resources>
     <color name="select_btn">#CCCCCC</color>
     <color name="select_btn_focus">#FFFFFF</color>
+    <color name="gray">#666666</color>
+    <color name="separator">#996600</color>
+    <color name="separator_active">#FFFF00</color>
 </resources>

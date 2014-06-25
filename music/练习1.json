@@ -1,0 +1,24 @@
+{
+    "author": "Randoms",
+    "time": 1403665665114,
+    "name": "练习1",
+    "id": "e107bba0-fc15-11e3-9506-b1471ad29d76",
+    "sounds": [
+        {
+            "name": 1,
+            "start": 0,
+            "end": 1000
+        },
+        {
+            "name": 1,
+            "start": 1000,
+            "end": 2000
+        },
+        {
+            "name": 2,
+            "start": 4000,
+            "end": 6000
+        }
+    ],
+    "length": 6000
+}

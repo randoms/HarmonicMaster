@@ -63,6 +63,7 @@ public class MainActivity extends Activity {
 						// static over
 						Log.d("RandomsRes",Utils.arrayToString(AudioProcesser.soundDb[insertSound]));
 						mAudio.close();
+						Utils.saveDB(AudioProcesser.soundDb,MainActivity.this);
 						finish();
 					}
 					Message msg = Message.obtain();

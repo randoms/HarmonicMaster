@@ -2,11 +2,9 @@ package me.randoms.harmonicmaster.views;
 
 import me.randoms.harmonicmaster.R;
 import me.randoms.harmonicmaster.callback.ProcessCallBack;
-
-import org.json.JSONArray;
-import org.json.JSONException;
-import org.json.JSONObject;
-
+import me.randoms.harmonicmaster.json.JSONArray;
+import me.randoms.harmonicmaster.json.JSONException;
+import me.randoms.harmonicmaster.json.JSONObject;
 import android.content.Context;
 import android.content.res.TypedArray;
 import android.graphics.Canvas;
@@ -20,6 +18,8 @@ import android.view.View;
 public class PlaySoundView extends View{
 	private int soundColor;
 	private JSONArray music;
+	private long length;
+	
 	private static PlaySoundView that;
 	
 	// draw related
@@ -28,8 +28,6 @@ public class PlaySoundView extends View{
 	private float baseWidth;
 	private float speed = 100;
 	
-	// endFlag
-	boolean endFlag = false;
 	
 	//callbacks
 	private ProcessCallBack mCallBack = null;
@@ -124,8 +122,9 @@ public class PlaySoundView extends View{
 		if(mCallBack != null)mCallBack.onStart();
 	}
 	
-	public void setSoundArray(JSONArray mMusic){
-		music = mMusic;
+	public void setSound(JSONObject mMusic){
+		music = mMusic.getJSONArray("sounds");
+		length = mMusic.getLong("length");
 	}
 
 	@Override
@@ -140,11 +139,10 @@ public class PlaySoundView extends View{
 		float bottom = 0;
 		
 		for(int i =0;i<music.length();i++){
-			endFlag = true;
 			try {
 				sound = music.getJSONObject(i);
-				top = -speed*sound.getInt("end") + mTimer.getTime()/(float)10+getHeight();
-				bottom = -speed*sound.getInt("start") + mTimer.getTime()/(float)10+getHeight();
+				top = -speed*(float)sound.getLong("end")/1000 + mTimer.getTime()/(float)10+getHeight();
+				bottom = -speed*(float)sound.getLong("start")/1000 + mTimer.getTime()/(float)10+getHeight();
 				left = baseWidth*(sound.getInt("name")-1); // name begins from 1
 				right = baseWidth*(sound.getInt("name"));
 			} catch (JSONException e) {
@@ -152,17 +150,16 @@ public class PlaySoundView extends View{
 				e.printStackTrace();
 				mCallBack.onError(e);
 			}
-			//Log.d("Randoms",String.valueOf(getWidth()));
-			//Log.d("Randoms",String.valueOf(baseWidth));
+			
 			if(bottom > 0 && top < getHeight()){
 				canvas.drawRect(left, top, right, bottom, mPaint);
-				endFlag = false;
 			}
-				
+			
+			if(mTimer.getTime() > length){
+				if(mCallBack != null)mCallBack.onStop();
+			}
 		}
-		if(endFlag){
-			mCallBack.onStop();
-		}
+		
 	}
 
 	@Override

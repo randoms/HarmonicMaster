@@ -1,5 +1,18 @@
 package me.randoms.harmonicmaster.utils;
 
+import java.io.BufferedReader;
+import java.io.File;
+import java.io.FileInputStream;
+import java.io.FileOutputStream;
+import java.io.InputStreamReader;
+
+import me.randoms.harmonicmaster.json.JSONArray;
+import me.randoms.harmonicmaster.json.JSONException;
+import me.randoms.harmonicmaster.json.JSONObject;
+import android.content.Context;
+import android.os.Environment;
+import android.util.Log;
+
 
 public final class Utils {
 	
@@ -93,7 +106,6 @@ public final class Utils {
 		}
 		
 		for(int i=input.length-1;i>index;i--){
-			// 鎶奿ndex涔嬪悗鐨勬暟鎹線鍚庣Щ涓�綅锛屼涪鎺夋渶鍚庝竴涓�
 			input[i] = input[i -1];
 		}
 		input[index] = value;
@@ -124,5 +136,98 @@ public final class Utils {
 			}
 		}
 		return String.valueOf(res);
+	}
+	
+	public static void saveDB(int[][] soundDB,Context context){
+		JSONArray db;
+		String data="";
+		try {
+			db = new JSONArray(soundDB);
+			data = db.toString(4); 
+		} catch (JSONException e) {
+			// TODO Auto-generated catch block
+			e.printStackTrace();
+		}
+		File mDBFile = getStorageDir(context,"/db","soundDB.json");
+		FileOutputStream outputStream;
+		try {
+			outputStream = new FileOutputStream(mDBFile);
+			outputStream.write(data.getBytes());
+			outputStream.close();
+		} catch (Exception e) {
+			e.printStackTrace();
+		}
+		
+		
+	}
+	
+	public static int[][] loadDB(Context context){
+		File soundDB = getStorageDir(context,"/db","soundDB.json");
+		BufferedReader reader;
+		String mLine;
+		String soundJsonString = "";
+		try{
+			reader = new BufferedReader(new InputStreamReader(new FileInputStream(soundDB)));
+			mLine = reader.readLine();
+			while (mLine != null) {
+				soundJsonString += mLine;
+				mLine = reader.readLine();
+			}
+			reader.close();
+		}catch (Exception e){
+			e.printStackTrace();
+		}
+		JSONArray soundJson = new JSONArray(soundJsonString);
+		int[][] res = new int[soundJson.length()][];
+		for(int i=0;i<soundJson.length();i++){
+			res[i] = new int[soundJson.getJSONArray(i).length()];
+			for(int j=0;j<soundJson.getJSONArray(i).length();j++){
+				res[i][j] = soundJson.getJSONArray(i).getInt(j);
+			}
+		}
+		return res;
+	}
+	
+	public static File getStorageDir(Context context, String dirname, String filename) {
+	    // Get the directory for the app's private pictures directory. 
+		String root = Environment.getExternalStorageDirectory().getPath();
+		File myDir = new File(root+Statics.BASE_DIR+dirname);
+		myDir.mkdirs();
+	    File file = new File(myDir,filename);
+	    Log.d("Randoms",file.getAbsolutePath());
+	    return file;
+	}
+	
+	private static JSONObject[] mMusicList; // add music file cache
+	public static JSONObject[] getMusicSheets(Context context){
+		if(mMusicList != null)return mMusicList;
+		String root = Environment.getExternalStorageDirectory().getPath();
+		File myDir = new File(root+Statics.BASE_DIR+"/music");
+		myDir.mkdirs();
+		File[] musicFiles = myDir.listFiles();
+		JSONObject[] musicSheetList = new JSONObject[musicFiles.length];
+		for(int i=0;i<musicFiles.length;i++){
+			musicSheetList[i] = new JSONObject(readFile(musicFiles[i]));
+		}
+		mMusicList = musicSheetList;
+		return musicSheetList;
+	}
+	
+	public static String readFile(File mFile){
+		String res = "";
+		String mLine;
+		BufferedReader mReader;
+		try{
+			mReader = new BufferedReader(new InputStreamReader(new FileInputStream(mFile)));
+			mLine = mReader.readLine();
+			while(mLine != null){
+				res += mLine;
+				mLine = mReader.readLine();
+			}
+			mReader.close();
+		}catch (Exception e){
+			e.printStackTrace();
+		}
+		return res;
 	}
 }

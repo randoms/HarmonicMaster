@@ -1,17 +1,11 @@
 package me.randoms.harmonicmaster;
 
-import java.io.BufferedReader;
-import java.io.IOException;
-import java.io.InputStreamReader;
-
 import me.randoms.harmonicmaster.callback.ProcessAudioHandler;
 import me.randoms.harmonicmaster.callback.ProcessCallBack;
+import me.randoms.harmonicmaster.json.JSONObject;
+import me.randoms.harmonicmaster.utils.Utils;
 import me.randoms.harmonicmaster.views.PlaySoundView;
 import me.randoms.harmonicmaster.views.SoundResView;
-
-import org.json.JSONArray;
-import org.json.JSONException;
-
 import android.app.Activity;
 import android.os.Bundle;
 import android.os.Handler;
@@ -19,7 +13,7 @@ import android.os.Message;
 import android.util.Log;
 
 public class PlayActivity extends Activity{
-	private JSONArray musicJson;
+	private JSONObject musicJson;
 	private PlaySoundView mView;
 	private static SoundResView mResView;
 	private AudioStream mAudio;
@@ -46,7 +40,7 @@ public class PlayActivity extends Activity{
 		musicJson = getMusic();
 		setContentView(R.layout.activity_play);
 		mView = (PlaySoundView)findViewById(R.id.playView);
-		mView.setSoundArray(musicJson);
+		mView.setSound(musicJson);
 		mView.setCallBack( new ProcessCallBack(){
 
 			@Override
@@ -64,7 +58,7 @@ public class PlayActivity extends Activity{
 			@Override
 			public void onStop() {
 				// TODO Auto-generated method stub
-				//finish();
+				finish();
 			}
 
 			@Override
@@ -112,42 +106,17 @@ public class PlayActivity extends Activity{
 		mAudio = new AudioStream(mAudioHandler);
 	}
 	
-	public JSONArray getMusic(){
-		BufferedReader reader = null;
-		String musicContent = "";
-		
-		try {
-			reader = new BufferedReader(new InputStreamReader(getAssets().open(
-					"music.txt"), "UTF-8"));
-
-			// do reading, usually loop until end of file reading
-			String mLine = reader.readLine();
-			while (mLine != null) {
-				musicContent += mLine;
-				mLine = reader.readLine();
-			}
-			reader.close();
-		} catch (IOException e) {
-			Log.e("Read Music", "Failed");
-		} finally {	
-			if (reader != null) {
-				try {
-					reader.close();
-				} catch (IOException e) {
-					Log.e("Read Music", "Failed");
-				}
+	public JSONObject getMusic(){
+		JSONObject[] musicList = Utils.getMusicSheets(this);
+		String uuid = getIntent().getStringExtra("uuid");
+		Log.d("Randoms",uuid);
+		for(int i=0;i<musicList.length;i++){
+			if(musicList[i].getString("id").equals(uuid)){
+				return musicList[i];
 			}
 		}
-		
-		try {
-			Log.d("Randoms",musicContent);
-			JSONArray json = new JSONArray(musicContent);
-			return json;
-		} catch (JSONException e) {
-			// TODO Auto-generated catch block
-			e.printStackTrace();
-			return null;
-		}
+		finish(); // no valid music found
+		return null;
 	}
 	
 	

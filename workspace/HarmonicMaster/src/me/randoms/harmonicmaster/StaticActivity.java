@@ -1,6 +1,7 @@
 package me.randoms.harmonicmaster;
 
 import me.randoms.harmonicmaster.adapter.SoundBtnAdapter;
+import me.randoms.harmonicmaster.utils.Utils;
 import android.app.Activity;
 import android.content.Intent;
 import android.os.Bundle;
@@ -29,13 +30,15 @@ public class StaticActivity extends Activity{
 			@Override
 			public void onClick(View mView) {
 				// TODO Auto-generated method stub
-				Intent mIntent = new Intent(mView.getContext(),PlayActivity.class);
+				
+				Intent mIntent = new Intent(mView.getContext(),SelectMusicActivity.class);
 				startActivity(mIntent);
 			}
 			
 		});
 		
 		// load saved music data
+		Utils.loadDB(StaticActivity.this);
 	}
 
 	
@@ -44,8 +47,6 @@ public class StaticActivity extends Activity{
 	protected void onStart() {
 		// TODO Auto-generated method stub
 		super.onStart();
-		
-		//load saved music data
 	}
 
 
@@ -54,8 +55,6 @@ public class StaticActivity extends Activity{
 	protected void onStop() {
 		// TODO Auto-generated method stub
 		super.onStop();
-		
-		// save static data
 	}
 	
 	

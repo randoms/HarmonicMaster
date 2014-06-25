@@ -1,0 +1,14 @@
+{
+    "author": "Randoms",
+    "time": 1403665058479,
+    "name": "song1",
+    "id": "777293f0-fc14-11e3-b3bd-f5b0d84c6a92",
+    "sounds": [
+        {
+            "name": 1,
+            "start": 0,
+            "end": 1000
+        }
+    ],
+    "length": 1000
+}
