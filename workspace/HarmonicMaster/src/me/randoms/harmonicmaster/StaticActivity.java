@@ -38,7 +38,7 @@ public class StaticActivity extends Activity{
 		});
 		
 		// load saved music data
-		Utils.loadDB(StaticActivity.this);
+		AudioProcesser.soundDb = Utils.loadDB(StaticActivity.this);
 	}
 
 	

@@ -12,13 +12,21 @@ import android.os.Handler;
 import android.os.Message;
 import android.util.Log;
 import android.view.View;
+import android.view.View.OnClickListener;
+import android.widget.Button;
+import android.widget.TextView;
 
 public class PlayActivity extends Activity{
 	private JSONObject musicJson;
 	private static PlaySoundView mView;
 	private static SoundResView mResView;
 	private static View separator;
+	private View playLayout;
+	private View scoreLayout;
+	private Button exitBtn;
+	private TextView scoreView;
 	private static PlayActivity that;
+	private static long score = 0;
 	
 	private AudioStream mAudio;
 	private ProcessAudioHandler mAudioHandler;
@@ -33,6 +41,7 @@ public class PlayActivity extends Activity{
 				mResView.setSoundName(AudioProcesser.getSoundName()+1);
 				if(AudioProcesser.getSoundName() == mView.getCurrnetSound()){
 					separator.setBackgroundColor(that.getResources().getColor(R.color.separator_active));
+					score += 20;
 				}else{
 					separator.setBackgroundColor(that.getResources().getColor(R.color.separator));
 				}
@@ -47,9 +56,23 @@ public class PlayActivity extends Activity{
 		// TODO Auto-generated method stub
 		super.onCreate(savedInstanceState);
 		that = this;
+		score = 0;
 		musicJson = getMusic();
 		setContentView(R.layout.activity_play);
 		separator = findViewById(R.id.separator);
+		exitBtn = (Button)findViewById(R.id.exitBtn);
+		exitBtn.setOnClickListener(new OnClickListener(){
+
+			@Override
+			public void onClick(View arg0) {
+				// TODO Auto-generated method stub
+				finish();
+			}
+			
+		});
+		playLayout = findViewById(R.id.playLayout);
+		scoreLayout = findViewById(R.id.scoreLayout);
+		scoreView = (TextView)findViewById(R.id.score);
 		mView = (PlaySoundView)findViewById(R.id.playView);
 		mView.setSound(musicJson);
 		mView.setCallBack( new ProcessCallBack(){
@@ -69,7 +92,9 @@ public class PlayActivity extends Activity{
 			@Override
 			public void onStop() {
 				// TODO Auto-generated method stub
-				finish();
+				playLayout.setVisibility(View.GONE);
+				scoreLayout.setVisibility(View.VISIBLE);
+				scoreView.setText(String.valueOf(score));
 			}
 
 			@Override

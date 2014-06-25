@@ -158,7 +158,7 @@ public class PlaySoundView extends View{
 				canvas.drawRect(left, top, right, bottom, mPaint);
 				if(bottom > getHeight() && top <getHeight()){
 					// current active sound
-					currentSound = i;
+					currentSound = music.getJSONObject(i).getInt("name")-1;
 				}
 			}
 			

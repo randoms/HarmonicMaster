@@ -176,6 +176,7 @@ public final class Utils {
 			reader.close();
 		}catch (Exception e){
 			e.printStackTrace();
+			return new int[88][];
 		}
 		JSONArray soundJson = new JSONArray(soundJsonString);
 		int[][] res = new int[soundJson.length()][];

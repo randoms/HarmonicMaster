@@ -132,11 +132,11 @@ public final class AudioProcesser {
 		
 		
 		// fake data
-		for(int i=0;i<6;i++){
+		/*for(int i=0;i<6;i++){
 			lastTopSix[i] = i*2+10+staticId; 
 		}
 		
-		blowFlag = true;
+		blowFlag = true;*/
 		
 		// static task begin
 		if(staticId != -1 && blowFlag){
