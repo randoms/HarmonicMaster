@@ -1,5 +1,6 @@
 package me.randoms.harmonicmaster;
 
+import me.randoms.harmonicmaster.callback.ProcessAudioHandler;
 import android.media.AudioFormat;
 import android.media.AudioRecord;
 import android.media.MediaRecorder.AudioSource;

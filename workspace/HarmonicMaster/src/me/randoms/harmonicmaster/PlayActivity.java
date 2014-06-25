@@ -4,6 +4,7 @@ import java.io.BufferedReader;
 import java.io.IOException;
 import java.io.InputStreamReader;
 
+import me.randoms.harmonicmaster.callback.ProcessAudioHandler;
 import me.randoms.harmonicmaster.callback.ProcessCallBack;
 import me.randoms.harmonicmaster.views.PlaySoundView;
 import me.randoms.harmonicmaster.views.SoundResView;

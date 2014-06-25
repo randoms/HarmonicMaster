@@ -1,5 +1,6 @@
-package me.randoms.harmonicmaster;
+package me.randoms.harmonicmaster.views;
 
+import me.randoms.harmonicmaster.R;
 import android.content.Context;
 import android.content.res.TypedArray;
 import android.graphics.Canvas;

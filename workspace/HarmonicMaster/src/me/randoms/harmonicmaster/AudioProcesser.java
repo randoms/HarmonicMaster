@@ -1,5 +1,7 @@
 package me.randoms.harmonicmaster;
 
+import me.randoms.harmonicmaster.utils.Fft;
+import me.randoms.harmonicmaster.utils.Utils;
 import android.util.Log;
 
 
@@ -23,7 +25,6 @@ public final class AudioProcesser {
 	static int staticCount = 0;
 	static int staticId = -1;
 	static short[] staticRecord = new short[mSpectrumNum]; // Frequency and count
-	static boolean staticFlag = false;
 	
 	// recognize variables
 	static int currentSoundId = -1; // -1 means need to recognize again
@@ -61,7 +62,12 @@ public final class AudioProcesser {
 	}
 	
 	public static boolean isStatic(){
-		return staticFlag;
+		if(staticId != -1){
+			return true;
+		}
+		else {
+			return false;
+		}
 	}
 	
 	public static void process(short[] fft){
@@ -124,9 +130,14 @@ public final class AudioProcesser {
 		// update lastSix
 		lastTopSix = topSix;
 		
-		if(staticId  != -1){
-			staticFlag = true;
+		
+		// fake data
+		for(int i=0;i<6;i++){
+			lastTopSix[i] = i*2+10+staticId; 
 		}
+		
+		blowFlag = true;
+		
 		// static task begin
 		if(staticId != -1 && blowFlag){
 			insertNewSound();
@@ -145,10 +156,9 @@ public final class AudioProcesser {
 	 */
 	public static void insertNewSound(){
 		if(staticId == -1)return;
-		staticFlag = true;
 		if(staticCount<1000){
 			for(int i=0;i<6;i++){
-				staticRecord[lastTopSix[i]] =(short) (staticRecord[lastTopSix[i]] +  6-i);
+				staticRecord[lastTopSix[i]] += 1;
 				Log.d("AudioProcesser",String.valueOf(staticCount));
 				staticCount ++;
 			}
@@ -157,7 +167,7 @@ public final class AudioProcesser {
 			// get top six record
 			staticCount =0;
 			soundDb[staticId] = Utils.getTopSix(staticRecord);
-			staticFlag =  false;
+			staticRecord = new short[mSpectrumNum]; // clear record
 			staticId = -1;
 		}
 	}
@@ -168,7 +178,7 @@ public final class AudioProcesser {
 				int equalCount = 0;
 				for(int k=0;k<6;k++){
 					for(int l=0;l<6;l++){
-						if(soundDb[j][k] -2 <=lastTopSix[l] && soundDb[j][k] +2 >=lastTopSix[l]){
+						if(soundDb[j][k] -1 <=lastTopSix[l] && soundDb[j][k] +1 >=lastTopSix[l]){
 							equalCount ++;
 						}
 					}

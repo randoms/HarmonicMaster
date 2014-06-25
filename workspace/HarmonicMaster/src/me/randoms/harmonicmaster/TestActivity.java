@@ -1,5 +1,7 @@
 package me.randoms.harmonicmaster;
 
+import me.randoms.harmonicmaster.views.SpectrumView;
+import me.randoms.harmonicmaster.views.TimeFieldView;
 import android.app.Activity;
 import android.os.Bundle;
 import android.util.Log;

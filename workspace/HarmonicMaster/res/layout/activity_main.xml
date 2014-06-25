@@ -11,7 +11,7 @@
         android:text="@string/spectrum_view"
         android:textSize="16sp" />
     
-    <me.randoms.harmonicmaster.SpectrumView
+    <me.randoms.harmonicmaster.views.SpectrumView
         xmlns:custom="http://schemas.android.com/apk/res/me.randoms.harmonicmaster"
         android:id="@+id/spectrumView"
         android:layout_width="match_parent"
@@ -25,7 +25,7 @@
         android:text="@string/time_field_view"
         android:textSize="16sp"/>
     
-    <me.randoms.harmonicmaster.TimeFieldView
+    <me.randoms.harmonicmaster.views.TimeFieldView
         xmlns:custom="http://schemas.android.com/apk/res/me.randoms.harmonicmaster"
         android:id="@+id/timeView"
         android:layout_width="match_parent"

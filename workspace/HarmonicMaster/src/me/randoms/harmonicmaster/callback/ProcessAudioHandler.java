@@ -1,6 +1,6 @@
-package me.randoms.harmonicmaster;
+package me.randoms.harmonicmaster.callback;
 
-abstract class ProcessAudioHandler {
+abstract public class ProcessAudioHandler {
 	
 	abstract public void onProcess(short[] buffer);
 	abstract public void onStop();

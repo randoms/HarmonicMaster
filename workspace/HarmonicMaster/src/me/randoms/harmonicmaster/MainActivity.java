@@ -1,5 +1,9 @@
 package me.randoms.harmonicmaster;
 
+import me.randoms.harmonicmaster.callback.ProcessAudioHandler;
+import me.randoms.harmonicmaster.utils.Utils;
+import me.randoms.harmonicmaster.views.SpectrumView;
+import me.randoms.harmonicmaster.views.TimeFieldView;
 import android.app.Activity;
 import android.content.Intent;
 import android.os.Bundle;
@@ -40,6 +44,7 @@ public class MainActivity extends Activity {
 		insertSound = mIntent.getIntExtra("insertSound", -1);
 		// set tasks
 		AudioProcesser.setInsertSound(insertSound);
+		AudioProcesser.stopRecognize();
 		mSpectView = (SpectrumView)findViewById(R.id.spectrumView);
 		mTimeView = (TimeFieldView)findViewById(R.id.timeView);
 		resText = (TextView)findViewById(R.id.recognize_res);

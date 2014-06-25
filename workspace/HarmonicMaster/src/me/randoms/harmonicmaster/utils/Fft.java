@@ -1,4 +1,4 @@
-package me.randoms.harmonicmaster;
+package me.randoms.harmonicmaster.utils;
 
 public class Fft {
 
