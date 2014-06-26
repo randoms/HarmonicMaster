@@ -51,15 +51,17 @@
             android:label="@string/app_name" >
         </activity>
         <activity
-            android:name="me.randoms.harmonicmaster.TestActivity">
-        </activity>
-        <activity 
-            android:name="me.randoms.harmonicmaster.StaticActivity">
+            android:name="me.randoms.harmonicmaster.TestActivity"
+            android:theme="@android:style/Theme.NoTitleBar">
             <intent-filter>
                 <action android:name="android.intent.action.MAIN" />
 
                 <category android:name="android.intent.category.LAUNCHER" />
             </intent-filter>
+        </activity>
+        <activity 
+            android:name="me.randoms.harmonicmaster.StaticActivity">
+            
         </activity>"
         <activity
             android:name="me.randoms.harmonicmaster.PlayActivity">

@@ -23,7 +23,7 @@
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:text="@string/time_field_view"
-        android:textSize="16sp"/>
+        android:textSize="16sp" />
     
     <me.randoms.harmonicmaster.views.TimeFieldView
         xmlns:custom="http://schemas.android.com/apk/res/me.randoms.harmonicmaster"

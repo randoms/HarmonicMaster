@@ -1,0 +1,24 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:orientation="vertical" >
+    <RelativeLayout
+        android:id="@+id/actionbar"
+        android:layout_width="match_parent"
+        android:layout_height="160dp"
+        android:background="@drawable/actionbar"
+        >
+        <RelativeLayout
+            android:layout_width="match_parent"
+            android:layout_height="56dp"
+            android:gravity="center_vertical">
+	        <me.randoms.harmonicmaster.views.floatBtnView
+	            android:layout_height="100dp"
+	            android:layout_width="100dp" />
+	            
+        </RelativeLayout>
+       
+    </RelativeLayout>
+
+</LinearLayout>

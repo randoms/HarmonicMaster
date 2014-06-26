@@ -1,33 +1,41 @@
 package me.randoms.harmonicmaster;
 
-import me.randoms.harmonicmaster.views.SpectrumView;
-import me.randoms.harmonicmaster.views.TimeFieldView;
 import android.app.Activity;
+import android.graphics.Point;
 import android.os.Bundle;
-import android.util.Log;
+import android.view.Display;
+import android.view.View;
+import android.view.ViewGroup;
+
+import com.readystatesoftware.systembartint.SystemBarTintManager;
 
 public class TestActivity extends Activity{
+	private View actionBar;
 
 	@Override
 	protected void onCreate(Bundle savedInstanceState) {
 		super.onCreate(savedInstanceState);
-		setContentView(R.layout.activity_main);
-		SpectrumView mView = (SpectrumView)findViewById(R.id.spectrumView);
-		double[] testData = new double[1024];
-		for(int i=0;i<1024;i++){
-			testData[i] = 100*Math.sin(2*Math.PI/1024*i)+100;
-		}
-		mView.setData(testData);
-		
-		TimeFieldView timeView = (TimeFieldView)findViewById(R.id.timeView);
-		
-		short[] mtestData = new short[1024];
-		for(int i=0;i<1024;i++){
-			mtestData[i] = (short) (Short.MAX_VALUE*Math.sin(2*Math.PI/1024*i));
-		}
-		
-		timeView.setData(mtestData);
-		Log.d("Randoms","Run");
+	    setContentView(R.layout.activity_main_v1);
+	    // create our manager instance after the content view is set
+	    SystemBarTintManager tintManager = new SystemBarTintManager(this);
+	    // enable status bar tint
+	    tintManager.setStatusBarTintEnabled(true);
+	    // enable navigation bar tint
+	    tintManager.setNavigationBarTintEnabled(true);
+	    tintManager.setTintColor(getResources().getColor(R.color.base_darker));
+	    
+	    actionBar = findViewById(R.id.actionbar);
+	    
+	    Display display = getWindowManager().getDefaultDisplay();
+	    Point size = new Point();
+	    display.getSize(size);
+	    int width = size.x;
+	    
+	    float actionBarHeight = (float)width/16*9;
+	    ViewGroup.LayoutParams mParams = actionBar.getLayoutParams();
+	    mParams.height = (int)actionBarHeight;
+	    actionBar.setLayoutParams(mParams);
+	    
 	}
 	
 	
