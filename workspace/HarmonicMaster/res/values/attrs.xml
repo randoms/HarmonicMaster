@@ -1,8 +1,26 @@
 <?xml version="1.0" encoding="utf-8"?>
 <resources>
-    <declare-styleable name="SpectrumView">
+	<declare-styleable name="SpectrumView">
        <attr name="color" format="color" />
        <attr name="line_size" format="float" />
        <attr name="spectrum_num" format="integer" />
-   </declare-styleable>
+       <attr name="zindex" format="integer" />
+   	</declare-styleable>
+  	
+  	<declare-styleable name="floatBtnView">
+       <attr name="fab_zindex" format="integer" />
+       <attr name="fab_icon" format="reference" />
+       <attr name="fab_color" format="color" />
+       <attr name="fab_top_zindex" format="integer" />
+       <attr name="fab_bottom_zindex" format = "integer" />
+       <attr name="fab_left_zindex" format="integer" />
+       <attr name="fab_right_zindex" format="integer" />
+   	</declare-styleable>
+   	
+  	<declare-styleable name="Shadow">
+  	    <attr name="shadow_top_zindex" format="integer" />
+  	    <attr name="shadow_bottom_zindex" format="integer" />
+  	    <attr name="shadow_left_zindex" format="integer" />
+  	    <attr name="shadow_right_zindex" format="integer" />
+  	</declare-styleable>
 </resources>

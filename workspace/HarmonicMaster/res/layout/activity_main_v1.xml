@@ -7,17 +7,22 @@
         android:id="@+id/actionbar"
         android:layout_width="match_parent"
         android:layout_height="160dp"
-        android:background="@drawable/actionbar"
+        android:background="#ffffff"
         >
         <RelativeLayout
             android:layout_width="match_parent"
             android:layout_height="56dp"
             android:gravity="center_vertical">
-	        <me.randoms.harmonicmaster.views.floatBtnView
-	            android:layout_height="100dp"
-	            android:layout_width="100dp" />
+	        
 	            
         </RelativeLayout>
+       <me.randoms.harmonicmaster.views.floatBtnView
+           xmlns:custom="http://schemas.android.com/apk/res-auto"
+           android:layout_height="100dp"
+           android:layout_width="100dp"
+           custom:fab_left_zindex="5"
+           custom:fab_right_zindex="1"
+           custom:fab_color="@color/accent_main"/>
        
     </RelativeLayout>
 
