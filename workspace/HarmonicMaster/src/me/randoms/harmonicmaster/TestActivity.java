@@ -31,7 +31,7 @@ public class TestActivity extends Activity{
 	    display.getSize(size);
 	    int width = size.x;
 	    
-	    float actionBarHeight = (float)width/16*9;
+	    float actionBarHeight = (float)width/4*3;
 	    ViewGroup.LayoutParams mParams = actionBar.getLayoutParams();
 	    mParams.height = (int)actionBarHeight;
 	    actionBar.setLayoutParams(mParams);

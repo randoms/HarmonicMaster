@@ -8,7 +8,6 @@
    	</declare-styleable>
   	
   	<declare-styleable name="floatBtnView">
-       <attr name="fab_zindex" format="integer" />
        <attr name="fab_icon" format="reference" />
        <attr name="fab_color" format="color" />
        <attr name="fab_top_zindex" format="integer" />

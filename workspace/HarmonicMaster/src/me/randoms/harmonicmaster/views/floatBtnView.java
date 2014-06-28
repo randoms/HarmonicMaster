@@ -169,7 +169,7 @@ public class floatBtnView extends View{
 		
 		if(icon != null){
 			int widthPx = (int)DisplayUtils.convertDpToPixel(12, this.getContext());
-			icon.setBounds(getWidth()/2-widthPx, getHeight()/2-widthPx, getWidth()+widthPx, getHeight()+widthPx);
+			//icon.setBounds(getWidth()/2-widthPx, getHeight()/2-widthPx, getWidth()+widthPx, getHeight()+widthPx);
 			icon.draw(canvas);
 		}
 		
