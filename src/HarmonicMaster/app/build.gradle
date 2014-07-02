@@ -1,0 +1,28 @@
+apply plugin: 'com.android.application'
+
+android {
+    compileSdkVersion 20
+    buildToolsVersion "19.1.0"
+
+    defaultConfig {
+        applicationId "me.randoms.harmonicmaster"
+        minSdkVersion 14
+        targetSdkVersion 19
+        versionCode 1
+        versionName "1.0"
+    }
+    buildTypes {
+        release {
+            runProguard false
+            proguardFiles getDefaultProguardFile('proguard-android.txt'), 'proguard-rules.pro'
+        }
+    }
+}
+
+dependencies {
+    compile fileTree(dir: 'libs', include: ['*.jar'])
+    compile 'com.android.support:appcompat-v7:19.+'
+    compile files('libs/Jama-1.0.3.jar')
+    compile files('libs/joda-time-2.3.jar')
+    compile files('libs/systembartint-1.0.3.jar')
+}

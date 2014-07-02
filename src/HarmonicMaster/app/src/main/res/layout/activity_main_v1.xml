@@ -1,0 +1,44 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:orientation="vertical"
+    android:layout_gravity="bottom">
+
+    <ImageView
+        android:id="@+id/background"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:src="@drawable/background" />
+
+    <me.randoms.harmonicmaster.views.Shadow
+        xmlns:custom="http://schemas.android.com/apk/res-auto"
+        android:layout_width="match_parent"
+        android:layout_height="10dp"
+        android:layout_below="@id/background"
+        custom:shadow_top_zindex="2"
+        custom:shadow_bottom_zindex="1" />
+
+    <me.randoms.harmonicmaster.views.floatBtnView
+        xmlns:custom="http://schemas.android.com/apk/res-auto"
+        android:layout_height="96dp"
+        android:layout_width="96dp"
+        android:layout_marginTop="-66dp"
+        android:layout_gravity="right"
+        android:layout_alignParentRight="true"
+        android:layout_alignParentBottom="true"
+        android:layout_marginBottom="-48dp"
+        android:layout_marginRight="-10dp"
+        custom:fab_color="@color/accent_main"
+        custom:fab_top_zindex="2"
+        custom:fab_bottom_zindex ="1"
+        custom:fab_icon="@drawable/record_white"/>
+
+
+    
+    <ListView 
+        android:id="@+id/music_list"
+        android:layout_width="match_parent"
+        android:layout_height="0dp" 
+        android:layout_weight="1"/>
+</LinearLayout>
