@@ -13,4 +13,8 @@
     <color name="accent_light">#f4ff81</color>
     <color name="accent_main">#eeff41</color>
     <color name="accent_drak">#c6ff00</color>
+    <!--文字颜色-->
+    <color name="text_light">#BCBCBC</color>
+    <color name="text_main">#B1B1B1</color>
+    <color name="text_dark">#212121</color>
 </resources>
