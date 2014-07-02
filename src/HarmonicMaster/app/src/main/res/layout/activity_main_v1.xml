@@ -3,12 +3,13 @@
     android:layout_width="match_parent"
     android:layout_height="match_parent"
     android:orientation="vertical"
-    android:layout_gravity="bottom">
+    android:background="#f1f1f1">
 
     <ImageView
         android:id="@+id/background"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
+        android:adjustViewBounds="true"
         android:src="@drawable/background" />
 
     <me.randoms.harmonicmaster.views.Shadow
@@ -23,11 +24,11 @@
         xmlns:custom="http://schemas.android.com/apk/res-auto"
         android:layout_height="96dp"
         android:layout_width="96dp"
-        android:layout_marginTop="-66dp"
+        android:layout_marginTop="-60dp"
         android:layout_gravity="right"
         android:layout_alignParentRight="true"
         android:layout_alignParentBottom="true"
-        android:layout_marginBottom="-48dp"
+        android:layout_marginBottom="-8dp"
         android:layout_marginRight="-10dp"
         custom:fab_color="@color/accent_main"
         custom:fab_top_zindex="2"
