@@ -22,6 +22,8 @@ public class TestActivity extends Activity {
 
         actionBar.setBackgroundDrawable(new ColorDrawable(Color.argb(10,0,0,0)));
         actionBar.setDisplayShowTitleEnabled(false);
+        actionBar.setDisplayUseLogoEnabled(false);
+        actionBar.setDisplayShowHomeEnabled(false);
 
 	}
 

@@ -1,11 +1,5 @@
 package me.randoms.harmonicmaster.adapter;
 
-import me.randoms.harmonicmaster.PlayActivity;
-import me.randoms.harmonicmaster.R;
-import me.randoms.harmonicmaster.json.JSONObject;
-
-import org.joda.time.LocalDateTime;
-
 import android.content.Context;
 import android.content.Intent;
 import android.view.LayoutInflater;
@@ -15,6 +9,12 @@ import android.widget.AdapterView;
 import android.widget.AdapterView.OnItemClickListener;
 import android.widget.BaseAdapter;
 import android.widget.TextView;
+
+import org.joda.time.LocalDateTime;
+
+import me.randoms.harmonicmaster.PlayActivity;
+import me.randoms.harmonicmaster.R;
+import me.randoms.harmonicmaster.json.JSONObject;
 
 public class MusicListAdapter extends BaseAdapter 
 	implements OnItemClickListener {
